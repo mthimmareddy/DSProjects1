@@ -4,6 +4,7 @@
 import os
 import re
 import fnmatch
+from datetime import datetime
 path='C:\\Users\\rishi\\Desktop\\Search_Engine'
 Programs = '''
 1.Search based on filename
@@ -74,7 +75,7 @@ def searchbasedonfilecontent(pattern):
     flag,path1=searchbasedonfilename(file)
     flag1=0
     print(path1)
-    if flag and (pdf in path1):
+    if flag and ('pdf' in path1):
         content=pdfreadder(path1)
         print(content)
         with open('tem.txt','w') as f1:
@@ -84,36 +85,49 @@ def searchbasedonfilecontent(pattern):
              match=re.findall(pattern, line)
              if(match):
                  flag1=1
-                 print(line)
+                 with open("temp.txt",'w') as f:
+                     f.write(line)
     elif flag :
-       
-        with open(path1, 'r') as f2:
+       with open(path1, 'r') as f2:
          for line in f2.readlines():
              match=re.findall(pattern, line)
              if(match):
                  flag1=1
-                 print(line)
+                 with open("temp.txt",'w') as f:
+                     f.write(line)
+                 
          if(flag1):
              print('Pattern found')
+             return temp.txt
          else:
              print('Pattern Not found')
+             return None
              
                  
     else: 
         print('File not found')
-'''
-def searchbasedondate():
-    for i,j,k in os.walk(path):
-        c1=0,c2=0,c3=0,c4=0
-        for f1 in k:
-            if f1.endswith(".txt"):
-                c1=c1+1
-            if f1.endswith(".img"):
-                c2=c2+1
-            if f1.endswith(".pdf"):
-                c3=c3+1
-            if f1.endswith(".doc"):
-                c4=c4+1
+        return None
+
+def searchbasedondate(pattern):
+    count=[]
+    #path='C:\\Users\\rishi\\Desktop\\Search_Engine'
+    for root,dirs,files in os.walk(path):
+        for directory in dirs:
+            ctime=datetime.fromtimestamp(os.path.getctime(directory)).strftime('%d-%m-%Y')
+            if (ctime==pattern):
+                print("Folder is created on date {0}".format(directory))
+           
+        for name in files:
+            path1=os.path.join(root,name)
+            #ctime=datetime.fromtimestamp(os.path.getctime(path1)).strftime('%d-%m-%Y')
+            #print(name,ctime)
+            if (ctime==pattern):
+                print("Name of file created on date {0}".format(path1))
+                count.append(path1)
+    return count
+           
+'''                
+                
 def searchbasedonsize():
     for i,j,k in os.walk(path):
         c1=0,c2=0,c3=0,c4=0
@@ -159,7 +173,7 @@ def searchbasedontypeoffile():
 
 #options = {1: searchbasedonfilename, 2:searchbasedonfilecontent , 3: searchbasedondate, 4:searchbasedonsize, 5:searchbasedontypeoffile} 
 
-options = {1: searchbasedonfilename,2:searchbasedonfilecontent}    
+options = {1: searchbasedonfilename,2:searchbasedonfilecontent,3:searchbasedondate}    
 
 print(Programs)
 
@@ -170,9 +184,10 @@ while (key == 'Y') or (key == 'y') or (key == 'yes') or key == 'Yes' or key == '
     print("#####################################################\n")
     ch = int(input('Enter the Search criteria :'))
     pattern = input('Enter the pattern based on Search criteria :')
+    
     print("\n")
     print("#####################################################\n")
-    options[ch](pattern)
+    result=options[ch](pattern)
     key = input('Do you want to continue : Press Y/Yes/y/yes or N/No/no/n : ')
 
 if key == 'N' or key == 'n' or key == 'no' or key == 'NO' or key == 'No':
