@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<style>
+.content {
+    max-width: 500px;
+    margin: auto;
+}
+body{
+    text-align: center;    
+}
+h6{
+    font-family: 'Amatic SC', cursive;
+    font-weight: normal;
+    color: #8ac640;
+    font-size: 1.5em;
+}
+button{
+    background-color: #f2f2f2;
+    border: 1px solid #f2f2f2;
+    border-radius: 2px;
+    color: #757575;
+    cursor: default;
+    font-family: arial,sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    margin: 11px 4px;
+    min-width: 54px;
+    padding: 0 16px;
+    text-align: center;
+	}
+</style>
+
+
+
+<body>
+
+<div class="content">
+<img src="C:\Users\rishi\Desktop\Search_Engine\image.png" alt="Wikihow LOGO" width=500, height=200>
+
+ 
+<br>
+  <h6>Select search option:<h6><br>
+  <select >
+  <option value="volvo" >Search based on filename</option>
+  <option value="saab">Search based on file title</option>
+  <option value="mercedes">Search based on file creation/modified date</option>
+  <option value="audi">Search based on file size</option>
+  <option value="audi">Search based on file type(pdf,img,doc,txt)</option>
+</select><br><br>
+
+  <h6>Enter the pattern to be searched:</h6><br>
+  <input type="text" name="firstname"  size=100>
+  <br><br><br>
+  
+    <form name = "input" action = "script.php" method = "get">
+
+    <button name="forwardBtn" type="submit">Search Information</button>
+  
+
+</form> 
+
+<p>If you click the "Submit" button, the form-data will be sent to a page called "/action_page.php".</p>
+</div>
+</body>
+</html>
