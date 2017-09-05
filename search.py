@@ -7,7 +7,7 @@ import fnmatch
 path='C:\\Users\\rishi\\Desktop\\Search_Engine'
 Programs = '''
 1.Search based on filename
-2.Search based on file title
+2.Search based on file content
 3.Search based on file creation/modified date
 4.Search based on file size
 5.Search based on file type(pdf,img,doc,txt)
@@ -56,7 +56,15 @@ def searchbasedonfilename(pattern):
         print('File not found')
     return flag,count[0]
        
-
+def pdfreadder(file):
+    import PyPDF2
+    pdf_file = open(file, 'rb')
+    read_pdf = PyPDF2.PdfFileReader(pdf_file)
+    number_of_pages = read_pdf.getNumPages()
+    page = read_pdf.getPage(0)
+    page_content = page.extractText()
+    print (page_content.encode('utf-8'))
+    return page_content
 
 
        
@@ -64,13 +72,34 @@ def searchbasedonfilename(pattern):
 def searchbasedonfilecontent(pattern):
     file=input('Enter the file in which pattern to be searched') 
     flag,path1=searchbasedonfilename(file)
-    if flag:
-        with open(path1, 'r') as f:
-            for line in f:
-                if pattern in line:
-                    #for i in range(8):
-                    print (line)
-    else:
+    flag1=0
+    print(path1)
+    if flag and (pdf in path1):
+        content=pdfreadder(path1)
+        print(content)
+        with open('tem.txt','w') as f1:
+            f1.write(content)
+        with open('tem.txt', 'r') as f2:
+         for line in f2.readlines():
+             match=re.findall(pattern, line)
+             if(match):
+                 flag1=1
+                 print(line)
+    elif flag :
+       
+        with open(path1, 'r') as f2:
+         for line in f2.readlines():
+             match=re.findall(pattern, line)
+             if(match):
+                 flag1=1
+                 print(line)
+         if(flag1):
+             print('Pattern found')
+         else:
+             print('Pattern Not found')
+             
+                 
+    else: 
         print('File not found')
 '''
 def searchbasedondate():
